@@ -2,32 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+/* Limit image size inside the Quill editor */
+.ql-editor img {
+  max-width: 100%; /* Images will scale to fit the width of their container */
+  height: auto;    /* Maintain the aspect ratio of the images */
+  max-height: 300px; /* Set a maximum height for images */
+}
+.todo-list img {
+  max-width: 100%; /* Images will scale to fit the width of their container */
+  height: auto;    /* Maintain the aspect ratio of the images */
+  max-height: 300px; /* Set a maximum height for images */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.ql-editor a {
+  color: #007bff; /* Default link color */
+  text-decoration: underline; /* Optional: underline links */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.ql-editor a:hover {
+  color: #0056b3; /* Hover color */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.special-characters-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
+.character-button {
+  /* background: transparent; */
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.ql-toolbar .ql-special {
+  display: inline-block;
+  margin: 0 10px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.ql-toolbar .ql-special:hover {
+  background-color: #e0e0e0;
+}
+
