@@ -31,6 +31,7 @@ const QuillEditor = ({ setEditorContent, value }) => {
             [{ 'align': [] }],
             ['formula'],
             ['link', 'image','video'],
+            [{ 'code-block': true }]
           
           ],
         }}
@@ -41,7 +42,7 @@ const QuillEditor = ({ setEditorContent, value }) => {
           'color', 'background',
           'align',
           'formula',
-          'link', 'image', 'video'
+          'link', 'image', 'video','code-block'
         ]}
       />
     </div>
