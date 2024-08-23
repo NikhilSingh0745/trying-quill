@@ -10,29 +10,30 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const QuillEditor = ({ setEditorContent, value }) => {
   const handleChange = (content) => {
     setEditorContent(content);
+    console.log('Editor content:', content); // Inspect the content here
   };
 
   return (
     <div>
       <ReactQuill
-      style={{
-        height: "40vh",
-        margin: "30px"
-      }}
+        style={{
+          height: "60vh",
+          margin: "30px",
+        }}
         theme="snow"
         value={value}
         onChange={handleChange}
         modules={{
           toolbar: [
-            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ 'header': [1, 2, 3, false] }], // Specify headers: h1, h2, h3
+            [{ 'font': ['sans-serif', 'serif', 'monospace', 'poppins', 'arial', 'verdana'] }], // Added fonts
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
             ['bold', 'italic', 'underline'],
             [{ 'color': [] }, { 'background': [] }],
             [{ 'align': [] }],
-            ['formula'],
-            ['link', 'image','video'],
-            [{ 'code-block': true }]
-          
+            ['link', 'image', 'video'], // Default link functionality
+            [{ 'code-block': true }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }]
           ],
         }}
         formats={[
@@ -41,8 +42,8 @@ const QuillEditor = ({ setEditorContent, value }) => {
           'list', 'bullet',
           'color', 'background',
           'align',
-          'formula',
-          'link', 'image', 'video','code-block'
+          'link', 'image', 'video', 'code-block',
+          'indent'
         ]}
       />
     </div>

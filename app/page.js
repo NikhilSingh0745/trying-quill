@@ -1,23 +1,39 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QuillEditor from './component/QuillEditor';
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
   const [editorContent, setEditorContent] = useState('');
-  const [editIndex, setEditIndex] = useState(null); // State for tracking the index of the item being edited
+  const [editIndex, setEditIndex] = useState(null);
+
+  // Load todos from local storage when the component mounts
+  useEffect(() => {
+    const savedTodos = localStorage.getItem('todos');
+    console.log("savedTodos", savedTodos)
+    if (savedTodos) {
+      setTodos(JSON.parse(savedTodos));
+    }
+  }, []);
+
+  // Save todos to local storage whenever they change
+  useEffect(() => {
+    if (todos.length > 0) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    } else {
+      localStorage.removeItem('todos');
+    }
+  }, [todos]);
 
   const handleSubmit = () => {
     if (editorContent.trim()) {
       if (editIndex !== null) {
-        // Edit existing item
         const updatedTodos = todos.map((todo, index) =>
           index === editIndex ? editorContent : todo
         );
         setTodos(updatedTodos);
         setEditIndex(null);
       } else {
-        // Add new item
         setTodos([...todos, editorContent]);
       }
       setEditorContent('');
@@ -25,12 +41,13 @@ const Home = () => {
   };
 
   const handleEdit = (index) => {
-    setEditorContent(todos[index]); // Load the content into the editor
-    setEditIndex(index); // Set the index of the item being edited
+    setEditorContent(todos[index]);
+    setEditIndex(index);
   };
 
   const handleDelete = (index) => {
-    setTodos(todos.filter((_, i) => i !== index));
+    const updatedTodos = todos.filter((_, i) => i !== index);
+    setTodos(updatedTodos);
     if (editIndex === index) {
       setEditIndex(null);
       setEditorContent('');
@@ -40,12 +57,13 @@ const Home = () => {
   return (
     <div>
       <h1 className='ml-10 mt-4'>My Quill Editor</h1>
+      
       <QuillEditor setEditorContent={setEditorContent} value={editorContent} />
       <button
         className='py-3 px-4 bg-slate-800 mt-[50px] ml-8 rounded-xl text-white'
         onClick={handleSubmit}
       >
-        {editIndex !== null ? 'Update' : 'Submit'} {/* Change button text based on editing state */}
+        {editIndex !== null ? 'Update' : 'Submit'}
       </button>
 
       <div className='mt-2 ml-8'>
