@@ -4,6 +4,7 @@ import QuillEditor from './component/QuillEditor';
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
+
   const [editorContent, setEditorContent] = useState('');
   const [editIndex, setEditIndex] = useState(null);
 
